@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KLER — AI Persona Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --galaxy:#7B61FF;
+  --lavender:#B9A7FF;
+  --mint:#50E0C8;
+  --midnight:#1F2146;
+  --moon:#F7FAFC;
+  --lilac:#EDE6FF;
+  --ink:#1F2146;
+  --grad:linear-gradient(120deg,#7B61FF 0%,#9B7DFF 45%,#50E0C8 100%);
+  --soft:0 18px 50px -22px rgba(31,33,70,.30);
+  --soft-sm:0 8px 24px -12px rgba(31,33,70,.22);
+  --orange:#FF8A3D;
+  --pink:#FF5C8A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'IBM Plex Sans Thai','Sora',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--moon);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  line-height:1.5;
+}
+h1,h2,h3,.font-sora{font-family:'Sora','IBM Plex Sans Thai',sans-serif;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+.eyebrow{font-family:'Sora',sans-serif;font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:var(--galaxy);}
+.gradient-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+a{color:inherit;text-decoration:none;}
+
+/* ---------- HEADER ---------- */
+header{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(247,250,252,.72);border-bottom:1px solid rgba(123,97,255,.12);}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px;}
+.nav img{height:30px;display:block;}
+.nav-links{display:flex;gap:30px;align-items:center;}
+.nav-links a{font-size:15px;font-weight:500;color:#4a4a63;transition:color .2s;}
+.nav-links a:hover{color:var(--galaxy);}
+.pill-btn{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;white-space:nowrap;color:#fff;background:var(--grad);padding:11px 22px;border-radius:99px;box-shadow:0 10px 22px -10px rgba(123,97,255,.7);transition:transform .2s;}
+.pill-btn:hover{transform:translateY(-2px);}
+@media(max-width:820px){.nav-links{display:none;}}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;padding:70px 0 90px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;background:
+   radial-gradient(680px 480px at 78% 28%,rgba(123,97,255,.20),transparent 60%),
+   radial-gradient(560px 420px at 90% 70%,rgba(80,224,200,.16),transparent 60%),
+   radial-gradient(520px 380px at 6% 8%,rgba(185,167,255,.20),transparent 60%);}
+.stars{position:absolute;inset:0;z-index:0;}
+.star{position:absolute;background:#fff;border-radius:50%;box-shadow:0 0 8px 1px rgba(255,255,255,.9);animation:twinkle 4s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;}
+.hero h1{font-size:clamp(34px,4.4vw,58px);line-height:1.08;font-weight:800;letter-spacing:-.01em;margin:18px 0 0;}
+.hero .lead{font-size:18px;color:#52526b;margin-top:20px;max-width:480px;}
+.hero .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+.tag{font-family:'Sora',sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:99px;border:1.5px solid rgba(123,97,255,.35);color:var(--galaxy);background:rgba(255,255,255,.6);}
+.tag.mint{border-color:rgba(80,224,200,.55);color:#1d9e8c;}
+.hero-cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+.ghost-btn{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;color:var(--galaxy);background:#fff;padding:11px 22px;border-radius:99px;border:1.5px solid rgba(123,97,255,.3);box-shadow:var(--soft-sm);transition:transform .2s;}
+.ghost-btn:hover{transform:translateY(-2px);}
+
+/* hero visual stack */
+.hero-visual{position:relative;min-height:520px;display:flex;align-items:flex-end;justify-content:center;gap:6px;}
+.orb{position:absolute;width:430px;height:430px;border-radius:50%;top:46%;left:42%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle at 38% 32%,rgba(255,255,255,.9),rgba(185,167,255,.5) 38%,rgba(123,97,255,.28) 62%,transparent 75%);
+  filter:blur(2px);z-index:1;animation:orbf 8s ease-in-out infinite;}
+@keyframes orbf{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,-58%)}}
+.hero-dog{position:relative;z-index:2;width:360px;max-width:50%;height:auto;display:block;align-self:flex-end;margin-bottom:150px;filter:drop-shadow(0 26px 30px rgba(123,97,255,.28));animation:floatY 7s ease-in-out infinite;}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.phone-mock{position:relative;flex:none;width:236px;border-radius:38px;background:#1b1c3a;padding:8px;box-shadow:0 34px 64px -22px rgba(31,33,70,.55),0 0 0 1.5px rgba(123,97,255,.22);z-index:3;transform:rotate(6deg);transform-origin:center bottom;animation:floatTilt 7.6s ease-in-out infinite;}
+@keyframes floatTilt{0%,100%{transform:rotate(6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-10px)}}
+.phone-notch{position:absolute;top:16px;left:50%;transform:translateX(-50%);width:58px;height:15px;background:#1b1c3a;border-radius:99px;z-index:2;}
+.phone-screen{border-radius:30px;overflow:hidden;background:#fff;}
+.phone-screen img{width:100%;display:block;}
+.glasses-float{position:absolute;left:-10%;bottom:-26px;width:120%;max-width:none;filter:drop-shadow(0 26px 36px rgba(31,33,70,.34));z-index:4;animation:floatY2 6.5s ease-in-out infinite;}
+@keyframes floatY2{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
+@media(max-width:920px){
+  .hero-grid{grid-template-columns:1fr;gap:20px;}
+  .hero-visual{min-height:460px;margin-top:6px;}
+  .hero .lead,.hero .tags,.hero-cta{max-width:none;}
+}
+@media(max-width:560px){
+  .hero-dog{width:200px;}
+  .phone-mock{width:180px;}
+  .glasses-float{width:58%;}
+}
+
+/* ---------- SECTION SHELL ---------- */
+section{position:relative;}
+.sec{padding:88px 0;}
+.sec-head{text-align:center;max-width:680px;margin:0 auto 52px;}
+.sec-head h2{font-size:clamp(28px,3.4vw,42px);font-weight:800;line-height:1.12;margin-top:12px;}
+.sec-head p{color:#5c5c74;font-size:17px;margin-top:14px;}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:none;}
+
+/* ---------- FEATURES ---------- */
+.feat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+.feat{background:#fff;border-radius:22px;padding:26px 20px;box-shadow:var(--soft-sm);border:1px solid rgba(123,97,255,.07);transition:transform .3s,box-shadow .3s;}
+.feat:hover{transform:translateY(-8px);box-shadow:var(--soft);}
+.ficon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin-bottom:18px;color:#fff;}
+.ficon svg{width:28px;height:28px;}
+.feat h3{font-size:16px;font-weight:700;letter-spacing:.01em;}
+.feat p{color:#62627a;font-size:13.5px;margin-top:8px;}
+@media(max-width:900px){.feat-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr;}}
+
+/* ---------- PERSONA SWITCHER ---------- */
+.persona{background:linear-gradient(180deg,#fff,#faf8ff);}
+.psw{display:flex;justify-content:center;gap:10px;margin-bottom:42px;flex-wrap:wrap;}
+.psw button{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;white-space:nowrap;cursor:pointer;border:1.5px solid rgba(123,97,255,.25);background:#fff;color:#52526b;padding:12px 24px;border-radius:99px;display:flex;align-items:center;gap:10px;transition:all .25s;}
+.psw button .dot{width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.5;}
+.psw button[aria-selected="true"]{color:#fff;border-color:transparent;box-shadow:var(--soft);}
+.psw button .soon-pill{font-size:8.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;padding:2px 7px;border-radius:99px;background:rgba(123,97,255,.12);color:#7B61FF;}
+.psw button[aria-selected="true"] .soon-pill{background:rgba(255,255,255,.25);color:#fff;}
+.psw button[aria-selected="true"] .dot{opacity:1;background:#fff;}
+.pcard{position:relative;display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:center;background:#fff;border-radius:30px;padding:44px;box-shadow:var(--soft);border:1px solid rgba(123,97,255,.08);min-height:380px;}
+.pmedia{position:relative;display:grid;place-items:center;}
+.pmedia .pring{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.9),var(--p-soft) 55%,transparent 72%);transition:background .4s;}
+.pmedia img{position:relative;width:280px;z-index:2;filter:drop-shadow(0 22px 30px rgba(31,33,70,.3));transition:opacity .35s,transform .35s;}
+.pphone{position:absolute;right:-214px;top:57%;width:202px;height:410px;border-radius:36px;background:#1b1c3a;padding:9px;box-shadow:0 38px 66px -20px rgba(31,33,70,.5),0 0 0 1.5px rgba(123,97,255,.22);transform:translateY(-50%) rotate(8deg);transform-origin:center;z-index:5;}
+.pphone-scr{width:100%;height:100%;border-radius:28px;overflow:hidden;background:#fff;}
+.pscreens{position:relative;width:100%;height:100%;}
+.psc{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;opacity:0;transition:opacity .8s ease;}
+.psc.on{opacity:1;}
+@media(min-width:1101px){.pcard{margin-right:236px;}}
+@media(max-width:1100px){.pphone{display:none;}}
+.pbadge{position:absolute;top:8px;right:8px;z-index:3;font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;padding:7px 14px;border-radius:99px;color:#fff;}
+.pinfo .pnum{font-family:'Sora',sans-serif;font-weight:800;font-size:13px;letter-spacing:.15em;}
+.pinfo h3{font-size:32px;font-weight:800;margin:6px 0 4px;}
+.pinfo .psub{color:#5c5c74;font-size:16px;margin-bottom:24px;}
+.pfeatures{list-style:none;display:flex;flex-direction:column;gap:14px;}
+.pfeatures li{display:flex;align-items:center;gap:14px;font-size:15.5px;font-weight:500;color:#33334a;}
+.pfeatures .chk{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;}
+.pfeatures .chk svg{width:16px;height:16px;}
+@media(max-width:860px){.pcard{grid-template-columns:1fr;gap:26px;padding:32px 24px;text-align:center;}.pmedia img{width:220px;}.pmedia .pring{width:240px;height:240px;}.pfeatures li{text-align:left;}}
+
+/* ---------- PLATFORM ---------- */
+.platform{background:var(--midnight);color:#fff;border-radius:40px;margin:0 28px;}
+.platform .wrap{padding:80px 0;}
+.platform .sec-head h2{color:#fff;}
+.platform .sec-head p{color:rgba(255,255,255,.7);}
+.flow{display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:wrap;}
+.fnode{flex:1;min-width:150px;max-width:200px;text-align:center;padding:8px;}
+.fnode .fn-vis{height:104px;display:grid;place-items:center;margin-bottom:14px;}
+.fnode .fn-circle{width:88px;height:88px;border-radius:24px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);}
+.fnode .fn-circle svg{width:40px;height:40px;color:#fff;}
+.fnode .fn-circle.k{background:var(--grad);border:none;}
+.fnode .fn-circle.k span{font-family:'Sora',sans-serif;font-weight:800;font-size:34px;color:#fff;}
+.fnode img{width:88px;height:88px;object-fit:cover;border-radius:24px;}
+.fnode b{font-family:'Sora',sans-serif;display:block;font-size:14px;letter-spacing:.04em;}
+.fnode small{color:rgba(255,255,255,.6);font-size:12.5px;}
+.farrow{display:grid;place-items:center;color:var(--lavender);font-size:26px;padding:0 4px;align-self:center;height:104px;}
+@media(max-width:760px){.farrow{transform:rotate(90deg);height:36px;}.fnode{max-width:none;width:100%;}.flow{flex-direction:column;align-items:center;}}
+.psub-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:54px;}
+.psf{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px 18px;}
+.psf .pic{width:38px;height:38px;border-radius:11px;background:rgba(123,97,255,.3);display:grid;place-items:center;flex:none;}
+.psf .pic svg{width:20px;height:20px;color:var(--lavender);}
+.psf span{font-size:13.5px;font-weight:500;}
+@media(max-width:760px){.psub-feats{grid-template-columns:1fr 1fr;}}
+
+/* ---------- SMART GLASSES ---------- */
+.glassfx{background:linear-gradient(180deg,#fff,#f7f4ff);}
+.gx-stage{position:relative;max-width:960px;margin:0 auto;min-height:400px;display:flex;align-items:center;justify-content:center;}
+.gx-orb{position:absolute;width:330px;height:330px;border-radius:50%;background:radial-gradient(circle at 42% 38%,rgba(255,255,255,.9),rgba(185,167,255,.28) 50%,transparent 72%);filter:blur(2px);z-index:0;}
+.gx-glasses{position:relative;z-index:1;width:860px;max-width:96%;height:auto;filter:drop-shadow(0 24px 34px rgba(31,33,70,.22));}
+.gx-call{position:absolute;z-index:2;display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);border:1px solid rgba(123,97,255,.16);border-radius:14px;padding:10px 14px;box-shadow:var(--soft-sm);max-width:230px;}
+.gx-call .gx-ic{flex:none;width:36px;height:36px;border-radius:10px;background:var(--lilac);color:var(--galaxy);display:grid;place-items:center;}
+.gx-call .gx-ic svg{width:20px;height:20px;}
+.gx-tx b{display:block;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:var(--ink);}
+.gx-tx small{font-size:12px;color:#62627a;line-height:1.3;display:block;}
+.c-disp{top:10%;left:0;}
+.c-cam{top:10%;right:0;}
+.c-mic{bottom:10%;left:0;}
+.c-spk{bottom:10%;right:0;}
+.gx-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px;}
+.gxf{background:#fff;border-radius:20px;padding:24px 20px;box-shadow:var(--soft-sm);border:1px solid rgba(123,97,255,.07);transition:transform .3s,box-shadow .3s;}
+.gxf:hover{transform:translateY(-6px);box-shadow:var(--soft);}
+.gxf-ic{width:52px;height:52px;border-radius:14px;background:var(--grad);color:#fff;display:grid;place-items:center;margin-bottom:16px;}
+.gxf-ic svg{width:26px;height:26px;}
+.gxf h3{font-size:16px;font-weight:700;}
+.gxf p{color:#62627a;font-size:13.5px;margin-top:7px;}
+@media(max-width:900px){
+  .gx-stage{flex-direction:column;min-height:0;gap:14px;}
+  .gx-glasses{width:100%;order:-1;}
+  .gx-orb{display:none;}
+  .gx-call{position:static;max-width:none;width:100%;}
+  .gx-feats{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:520px){.gx-feats{grid-template-columns:1fr;}}
+.gx-specs{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 30px;margin-top:32px;padding:20px 24px;background:rgba(123,97,255,.05);border:1px solid rgba(123,97,255,.12);border-radius:18px;}
+.gx-specs .gxs{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:#4a4a63;}
+.gx-specs .gxs svg{width:19px;height:19px;color:var(--galaxy);flex:none;}
+@media(max-width:520px){.gx-specs{gap:12px 20px;}.gx-specs .gxs{font-size:12.5px;}}
+
+/* ---------- GEAR GIMMICK ---------- */
+.gear-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:center;}
+.persona .gear-grid{margin-top:30px;}
+.gear{background:#fff;border-radius:20px;padding:18px 20px 20px;box-shadow:var(--soft-sm);border:1.5px solid rgba(123,97,255,.07);position:relative;overflow:hidden;--ga:#7B61FF;cursor:pointer;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s;}
+.gear .step{font-family:'Sora',sans-serif;font-weight:800;font-size:26px;color:var(--lilac);line-height:1;}
+.gear-img{display:grid;place-items:center;margin:8px 0 12px;}
+.gear-img img{max-height:118px;max-width:82%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 12px 18px rgba(31,33,70,.16));transition:transform .35s;}
+.gear:hover .gear-img img{transform:translateY(-3px) scale(1.05);}
+.gear h3{font-size:16px;font-weight:700;margin:0 0 2px;}
+.gear-sub{color:#62627a;font-size:13px;}
+.gear p{color:#62627a;font-size:14px;}
+.gear .barcode{margin-top:12px;height:7px;border-radius:99px;background:var(--grad);width:40%;transition:width .5s,background .4s;}
+.gear:hover .barcode{width:100%;}
+.gear.active{transform:scale(1.04);border-color:var(--ga);box-shadow:0 26px 50px -22px color-mix(in srgb,var(--ga) 55%,transparent);z-index:2;}
+.gear.active .step{color:var(--ga);opacity:.95;}
+.gear.active .barcode{width:100%;background:var(--ga);}
+.gear.active::after{content:"ACTIVE";position:absolute;top:16px;right:18px;font-family:'Sora',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;color:#fff;background:var(--ga);padding:4px 10px;border-radius:99px;}
+.gear-soon{position:absolute;top:16px;right:18px;white-space:nowrap;font-family:'Sora',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#9aa0c0;padding:4px 10px;border-radius:99px;}
+.gear.active:has(.gear-soon)::after{display:none;}
+@media(max-width:760px){.gear-grid{grid-template-columns:1fr;}}
+
+/* ---------- WHY ---------- */
+.why{background:linear-gradient(160deg,#f3efff,#eafaf6);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.whyc{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.75);backdrop-filter:blur(6px);border-radius:20px;padding:24px 26px;border:1px solid rgba(255,255,255,.7);box-shadow:var(--soft-sm);}
+.whyc .wn{flex:none;width:42px;height:42px;border-radius:13px;background:var(--grad);display:grid;place-items:center;color:#fff;}
+.whyc .wn svg{width:22px;height:22px;}
+.whyc h3{font-size:17px;font-weight:700;}
+.whyc p{color:#5c5c74;font-size:14.5px;margin-top:5px;}
+@media(max-width:680px){.why-grid{grid-template-columns:1fr;}}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--grad);color:#fff;padding:60px 0 40px;text-align:center;}
+footer img{height:30px;display:block;}
+.ft-logo{display:inline-flex;background:#fff;padding:13px 24px;border-radius:16px;margin-bottom:22px;box-shadow:0 14px 34px -14px rgba(0,0,0,.35);}
+.ft-contact{display:inline-flex;align-items:center;gap:9px;margin-top:24px;font-size:15px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:11px 22px;border-radius:99px;backdrop-filter:blur(6px);}
+.ft-contact svg{width:18px;height:18px;}
+.ft-contact a{font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+footer .ft-tag{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;}
+footer .ft-sub{opacity:.9;margin-top:8px;font-size:15px;}
+footer .ft-en{font-family:'Sora',sans-serif;letter-spacing:.18em;font-size:12px;text-transform:uppercase;margin-top:26px;opacity:.85;}
+
+/* persona detail extras */
+.pgear{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:8px 14px;border-radius:99px;margin-bottom:22px;}
+.pgear svg{width:15px;height:15px;}
+.pfeatures li{align-items:flex-start;}
+.pf-txt{display:flex;flex-direction:column;gap:2px;}
+.pf-txt b{font-size:15.5px;font-weight:600;color:#2a2a40;}
+.pf-txt small{font-size:13px;color:#6b6b82;font-weight:400;line-height:1.45;}
+.pcard .chk{margin-top:1px;}
+.pcard.soon .pmedia img{filter:none;}
+.pphone-soon{position:absolute;inset:0;z-index:3;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;background:linear-gradient(165deg,#f3eeff,#fbfaff);}
+.pphone-soon .psoon-ic{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:var(--galaxy);box-shadow:0 14px 26px -10px rgba(123,97,255,.6);}
+.pphone-soon .psoon-ic svg{width:30px;height:30px;}
+.pphone-soon b{font-family:'Sora',sans-serif;font-weight:800;font-size:16px;letter-spacing:.12em;color:var(--ink);}
+.pphone-soon small{font-size:12.5px;color:#62627a;line-height:1.5;}
+@media(max-width:860px){.pgear{margin-left:auto;margin-right:auto;}}
+
+/* ---------- PRICING ---------- */
+.pricing{background:linear-gradient(180deg,#faf8ff,#fff);}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch;}
+.price{position:relative;background:#fff;border-radius:24px;padding:34px 28px;box-shadow:var(--soft-sm);border:1px solid rgba(123,97,255,.1);display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s;}
+.price:hover{transform:translateY(-6px);box-shadow:var(--soft);}
+.price.feat{border:2px solid var(--galaxy);box-shadow:0 26px 60px -24px rgba(123,97,255,.6);}
+.price-tag{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--galaxy);}
+.price.feat .price-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;padding:6px 16px;border-radius:99px;box-shadow:0 10px 20px -8px rgba(123,97,255,.7);}
+.price-ic{width:52px;height:52px;border-radius:15px;background:var(--lilac);color:var(--galaxy);display:grid;place-items:center;margin:14px 0 16px;}
+.price.feat .price-ic{background:var(--grad);color:#fff;}
+.price-ic svg{width:26px;height:26px;}
+.price h3{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;}
+.price-amt{display:flex;align-items:baseline;gap:7px;margin:10px 0 20px;}
+.price-amt .amt{font-family:'Sora',sans-serif;font-size:38px;font-weight:800;color:var(--ink);}
+.price-amt .per{font-size:14px;color:#7a7a90;font-weight:500;}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:26px;flex:1;}
+.price-feats li{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;color:#3a3a52;}
+.price-feats svg{width:18px;height:18px;color:var(--mint);flex:none;margin-top:1px;}
+.price-btn{font-family:'Sora',sans-serif;font-weight:600;font-size:15px;text-align:center;padding:13px;border-radius:14px;color:var(--galaxy);background:#fff;border:1.5px solid rgba(123,97,255,.35);transition:transform .2s;}
+.price-btn:hover{transform:translateY(-2px);}
+.price.feat .price-btn{color:#fff;background:var(--grad);border-color:transparent;box-shadow:0 12px 26px -10px rgba(123,97,255,.7);}
+.price-note{text-align:center;color:#8a8aa0;font-size:13px;margin-top:26px;}
+@media(max-width:860px){.price-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto;}}
+
+/* shared accent helper set per-element via inline var */
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top"><img src="assets/logo.png" alt="KLER"></a>
+    <nav class="nav-links">
+      <a href="#personas">Personas</a>
+      <a href="#features">ฟีเจอร์</a>
+      <a href="#platform">Kler Platform</a>
+      <a href="#pricing">ราคา</a>
+      <a href="#why">ทำไม KLER</a>
+    </nav>
+    <a href="#personas" class="pill-btn">รู้จัก Kler</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="stars" id="stars"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">AI Persona Companion ✦</div>
+      <h1>Kler เป็นเพื่อน<br>ที่<span class="gradient-text">มองโลก</span>ไปกับคุณ</h1>
+      <p class="lead">AI Smart Glasses &amp; Kler Ecosystem — เพื่อนคู่ใจที่ช่วยให้ชีวิตง่ายขึ้น ปลอดภัยขึ้น และเชื่อมต่อกับคนที่ดูแลคุณ</p>
+      <div class="tags">
+        <span class="tag">Friendly</span>
+        <span class="tag">Empathetic</span>
+        <span class="tag mint">Adaptable</span>
+        <span class="tag">Empowering</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#personas" class="pill-btn">เลือก Persona ของคุณ</a>
+        <a href="#platform" class="ghost-btn">ดู Kler Platform →</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <canvas class="hero-dog" id="dogCanvas"></canvas>
+      <video id="dogVideo" src="assets/hey-kler.mp4" autoplay muted loop playsinline preload="auto" style="display:none"></video>
+      <div class="phone-mock">
+        <div class="phone-notch"></div>
+        <div class="phone-screen"><img src="assets/app-screen.png" alt="KLER App"></div>
+      </div>
+      <img class="glasses-float" src="assets/glasses-cut.png" alt="KLER Smart Glasses">
+    </div>
+  </div>
+  <!-- app example temporarily removed
+  <div class="dog-clip" id="dogClip">
+    <div class="dog-clip-head"><span class="dc-live">LIVE</span><span>Hey Kler 👋</span></div>
+    <video src="assets/hey-kler.mp4" autoplay muted loop playsinline poster="assets/video-poster.png"></video>
+  </div>
+  -->
+</section>
+
+<!-- SMART GLASSES -->
+<section class="sec glassfx" id="glasses">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">STEP 1 · เลือกแว่น</div>
+      <h2>แว่นตาอัจฉริยะ ที่มองเห็นในแบบที่คนอื่นมองไม่เห็น</h2>
+      <p>มองเห็น ได้ยิน และพูดคุยได้ในตัวเดียว — กล้อง AI เข้าใจสิ่งรอบตัว อ่านป้ายและข้อความให้ฟัง พร้อมแสดงข้อมูลตรงหน้าและสั่งงานด้วยเสียง</p>
+    </div>
+
+    <div class="gx-stage reveal">
+      <div class="gx-orb"></div>
+      <img class="gx-glasses" src="assets/glasses-hud.png" alt="KLER Smart Glasses">
+
+      <div class="gx-call c-disp">
+        <div class="gx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2.5"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div class="gx-tx"><b>จอแสดงผล</b><small>แสดงข้อมูลสำคัญตรงหน้า</small></div>
+      </div>
+      <div class="gx-call c-cam">
+        <div class="gx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h2L9 4h6l1.5 2h2A2.5 2.5 0 0 1 21 8.5v8A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5Z"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+        <div class="gx-tx"><b>กล้อง </b><small>ถ่ายภาพ เเสกนยา ออกฉลากยา</small></div>
+      </div>
+      <div class="gx-call c-mic">
+        <div class="gx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg></div>
+        <div class="gx-tx"><b>ไมโครโฟน</b><small>พูดคุยและสั่งงานด้วยเสียง</small></div>
+      </div>
+      <div class="gx-call c-spk">
+        <div class="gx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"/></svg></div>
+        <div class="gx-tx"><b>ลำโพงในตัว</b><small>เสียงเตือน / รับสาย–โทรออก</small></div>
+      </div>
+    </div>
+
+    <div class="gx-feats reveal">
+      <div class="gxf">
+        <div class="gxf-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>อ่านสิ่งรอบตัวให้ฟัง</h3>
+        <p>ยกแว่นส่อง Kler อ่านป้าย ฉลาก ข้อความ และบอกสิ่งที่อยู่ตรงหน้าให้ฟังทันที</p>
+      </div>
+      <div class="gxf">
+        <div class="gxf-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+        <h3>เตือนเรื่องสำคัญตรงเวลา</h3>
+        <p>แจ้งเตือนกิจวัตร นัดหมาย และสิ่งที่ต้องทำ พร้อมแสดงบนจอแว่น</p>
+      </div>
+      <div class="gxf">
+        <div class="gxf-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M17 8.5a5 5 0 0 1 0 7"/></svg></div>
+        <h3>ได้ยินเสียงเตือน</h3>
+        <p>เสียงพูดผ่านลำโพงในตัว ฟังชัดทุกคำ พร้อมสั่นและไฟแจ้งเตือน</p>
+      </div>
+      <div class="gxf">
+        <div class="gxf-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4h3l1.5 4-2 1.5a11 11 0 0 0 5 5L15.5 12l4 1.5v3a2 2 0 0 1-2.2 2A15 15 0 0 1 4.5 6.2 2 2 0 0 1 6.5 4Z"/></svg></div>
+        <h3>รับสาย</h3>
+        <p>รับสายและสนทนาผ่านไมโครโฟนในแว่น เชื่อมต่อง่ายผ่าน Bluetooth</p>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS -->
+<section class="sec persona" id="personas">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">STEP 2 · เลือกเพื่อน</div>
+      <h2>Kler ไหน คือเพื่อน AI ของคุณ?</h2>
+      <p>Kler ตัวเดียว สวมเครื่องประดับต่างกัน = AI Persona ต่างกัน บน Kler Platform </p>
+    </div>
+    <div class="gear-grid reveal" id="gearGrid"></div>
+    <div class="pcard reveal" id="pcard">
+      <div class="pmedia">
+        <div class="pring" id="pring"></div>
+        <img id="pimg" src="assets/persona-guide.png" alt="">
+      </div>
+      <div class="pinfo">
+        <div class="pnum" id="pnum"></div>
+        <h3 id="ptitle"></h3>
+        <p class="psub" id="pdesc"></p>
+        <div class="pgear" id="pgear"></div>
+        <ul class="pfeatures" id="pfeatures"></ul>
+      </div>
+      <div class="pphone" aria-hidden="true">
+        <div class="pphone-scr">
+          <div class="pscreens" id="pscreens">
+            <img src="assets/app-home.png" class="psc on" alt="">
+            <img src="assets/app-timeline.png" class="psc" alt="">
+            <img src="assets/app-profile.png" class="psc" alt="">
+            <img src="assets/app-chat.png" class="psc" alt="">
+          </div>
+          <div class="pphone-soon" id="pphoneSoon">
+            <div class="psoon-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/></svg></div>
+            <b>COMING SOON</b>
+            <small>กำลังพัฒนา<br>เปิดให้ใช้เร็ว ๆ นี้</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="sec" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Core Features</div>
+      <h2>หัวใจของ Kler</h2>
+      <p>ไม่ว่าจะเป็น Persona ไหน Kler ทุกตัวมีความสามารถหลักเหล่านี้ร่วมกัน</p>
+    </div>
+    <div class="feat-grid" id="featGrid"></div>
+  </div>
+</section>
+
+<!-- PLATFORM -->
+<section class="sec">
+  <div class="platform" id="platform">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow" style="color:var(--mint)">Kler Platform</div>
+        <h2>จากสายตา สู่ผู้ดูแล ในระบบเดียว</h2>
+        <p>ข้อมูลจากแว่นและ AI Persona ส่งตรงถึงคนที่ดูแลคุณ แบบเรียลไทม์</p>
+      </div>
+      <div class="flow reveal" id="flow"></div>
+      <div class="psub-feats reveal" id="platformFeats"></div>
+      <!-- app screens example temporarily removed
+      <div class="app-showcase reveal">
+        <div class="as-label">ตัวอย่างหน้าจอแอป KLER</div>
+        <img src="assets/app-screens.png" alt="KLER App screens">
+      </div>
+      -->
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="sec why" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Why Kler?</div>
+      <h2>ไม่ใช่แค่แว่น แต่คือเพื่อนที่อยู่กับคุณ</h2>
+    </div>
+    <div class="why-grid reveal" id="whyGrid"></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec pricing" id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Pricing</div>
+      <h2>เป็นเจ้าของ Kler ได้แล้ววันนี้</h2>
+      <p>ซื้อแว่นครั้งเดียว แล้วสมัครแพ็กเกจรายเดือนเพื่อปลดล็อก AI Persona ส่วนตัวของคุณ</p>
+    </div>
+    <div class="price-grid reveal" id="priceGrid"></div>
+    <p class="price-note reveal">ราคาเป็นตัวอย่างเบื้องต้น ปรับได้ตามแผนธุรกิจจริง</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-logo"><img src="assets/logo.png" alt="KLER"></div>
+    <div class="ft-tag">เพื่อนที่เข้าใจคุณทุกวัน</div>
+    <div class="ft-sub">อยู่เคียงข้างคุณในทุกช่วงชีวิต ✦</div>
+    <div class="ft-en">See better · Live freer · Together</div>
+    <div class="ft-contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>ติดต่อ <a href="mailto:admin@heykler.com">admin@heykler.com</a></div>
+  </div>
+</footer>
+
+<script src="assets/image-slot.js"></script>
+<script>
+/* ---------- ICONS (simple line set) ---------- */
+const ICON = {
+  eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>',
+  brain:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="4"/><path d="M9 9h6v6H9z"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>',
+  calendar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 9h18M8 3v4M16 3v4"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/></svg>',
+  family:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M2.5 20a5.5 5.5 0 0 1 11 0M14 20a4.5 4.5 0 0 1 7.5-3.3"/></svg>',
+  sos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.3-7 9.8C8 18.3 5 14.6 5 10V6l7-3Z"/><path d="M12 8.5v3.5M12 15h.01"/></svg>',
+  nav:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2Z"/></svg>',
+  ask:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.7 2.7 0 1 1 3.6 2.5c-.7.3-1.4.8-1.4 1.8v.3"/><path d="M11.5 17h.01"/></svg>',
+  grow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M6 20V11M11 20V7M16 20v-6M21 20V4"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M10.5 21a2 2 0 0 0 3 0"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="M8 16l3-4 3 2 4-6"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M9 11h6M9 14h3"/></svg>',
+  glasses:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="14" r="3.2"/><circle cx="18" cy="14" r="3.2"/><path d="M9.2 13.5c.8-1 4.8-1 5.6 0M2.8 13l1.4-5M21.2 13l-1.4-5"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9.3-9C1 7.5 3 4.5 6 4.5c2 0 3.2 1.3 4 2.5.8-1.2 2-2.5 4-2.5 3 0 5 3 3.3 6.5C19 15.6 12 20 12 20Z"/></svg>',
+  sparkle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/></svg>',
+  link:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a3 3 0 0 1 3-3h3a3 3 0 0 1 0 6h-1.5"/><path d="M15 12a3 3 0 0 1-3 3H9a3 3 0 0 1 0-6h1.5"/></svg>',
+  refresh:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 4v4h-4"/></svg>',
+};
+
+/* ---------- DATA ---------- */
+const features = [
+  {ic:'eye',c:'var(--galaxy)',t:'AI Vision Assistance',d:'ช่วยมองเห็นและเข้าใจโลกรอบตัว'},
+  {ic:'brain',c:'var(--galaxy)',t:'Personalized AI',d:'จำคุณ ปรับตามคุณ เข้าใจคุณ'},
+  {ic:'calendar',c:'var(--lavender)',t:'Daily Care',d:'เตือนยา กิจวัตร และสุขภาพ'},
+  {ic:'family',c:'var(--mint)',t:'Connected Care',d:'เชื่อมต่อผู้ดูแล ครอบครัว และองค์กร'},
+  {ic:'sos',c:'var(--pink)',t:'Safety First',d:'SOS และการช่วยเหลือฉุกเฉิน'},
+];
+
+const personas = [
+  {key:'guide',num:'01',name:'Guide Kler',accent:'#7B61FF',soft:'rgba(123,97,255,.22)',img:'assets/persona-guide.png',
+   status:'AVAILABLE TODAY',statusBg:'var(--mint)',
+   gear:'สายรัดนำทาง + ไม้เท้าอัจฉริยะ',
+   sub:'สำหรับผู้พิการทางสายตา และผู้สูงอายุ — ช่วยนำทาง ดูแล และเฝ้าระวังความปลอดภัยในทุกวัน',
+   feats:[
+     {ic:'nav',t:'นำทางด้วยเสียง',d:'บอกทิศทาง หลบสิ่งกีดขวาง และพาไปถึงที่หมายอย่างปลอดภัย'},
+     {ic:'eye',t:'บอกสิ่งรอบตัว & อ่านป้าย',d:'อ่านป้าย ฉลากยา และข้อความตรงหน้าให้ฟังแบบเรียลไทม์'},
+     {ic:'calendar',t:'เตือนยา & กิจวัตร',d:'เตือนกินยา นัดหมอ และดูแลกิจวัตรประจำวัน'},
+     {ic:'sos',t:'SOS & ตรวจจับการล้ม',d:'ตรวจจับการล้ม แจ้งเหตุฉุกเฉินถึงผู้ดูแลทันที'},
+     {ic:'family',t:'เชื่อมต่อผู้ดูแล',d:'ผู้ดูแล ครอบครัว หรือองค์กร ติดตามตำแหน่งและสุขภาพได้ตลอดเวลา'}
+   ]},
+  {key:'learn',num:'02',name:'Learn Kler',accent:'#FF8A3D',soft:'rgba(255,138,61,.22)',img:'assets/persona-learn.png',
+   status:'COMING SOON',statusBg:'#9aa0c0',soon:true,
+   gear:'เป้การเรียนรู้ + แท็บเล็ต AI',
+   sub:'สำหรับเด็ก — เพื่อน AI ที่ช่วยเรื่องพัฒนาการและการเรียนรู้ ผ่านการเล่นและสำรวจโลกจริง',
+   feats:[
+     {ic:'eye',t:'สำรวจโลกด้วย AI',d:'ชี้ไปที่สิ่งของ แล้ว Kler เล่าและสอนให้รู้จัก'},
+     {ic:'ask',t:'ตอบทุกคำถาม (Side Questions)',d:'ตอบ “ทำไม” ของเด็กด้วยภาษาที่เข้าใจง่าย'},
+     {ic:'grow',t:'ส่งเสริมพัฒนาการ',d:'กิจกรรมเรียนรู้ตามช่วงวัย ภาษา และความคิดสร้างสรรค์'},
+     {ic:'shield',t:'ลดเวลาหน้าจอ',d:'ชวนเด็กเรียนรู้จากโลกจริง แทนการจ้องมือถือ'},
+     {ic:'family',t:'ผู้ปกครองติดตาม',d:'ดูพัฒนาการและกิจกรรมของลูกผ่าน Kler Platform'}
+   ]},
+  {key:'explore',num:'03',name:'Explore Kler',accent:'#1FB39C',soft:'rgba(80,224,200,.28)',img:'assets/persona-explore.png',
+   status:'COMING SOON',statusBg:'#9aa0c0',soon:true,
+   gear:'ชุดผจญภัย + หมวกนักสำรวจ',
+   sub:'เพื่อนสายผจญภัย พาคุณออกไปสำรวจโลกอย่างมั่นใจ — กำลังพัฒนา เร็วๆ นี้',
+   feats:[
+     {ic:'pin',t:'นำทางสู่สถานที่ใหม่',d:'พาไปสำรวจที่ที่ไม่เคยไปอย่างมั่นใจ'},
+     {ic:'nav',t:'แนะนำจุดน่าสนใจ',d:'เล่าเรื่องราวและจุดเด่นระหว่างทาง'},
+     {ic:'sparkle',t:'บันทึกความทรงจำ',d:'เก็บภาพและเรื่องราวการเดินทางให้คุณ'},
+     {ic:'heart',t:'เพื่อนคู่ใจสายลุย',d:'อยู่เคียงข้างทุกการผจญภัย'}
+   ]},
+];
+
+const flow = [
+  {type:'svg',ic:'glasses',b:'Smart Glasses',s:'แว่นตาอัจฉริยะ'},
+  {type:'k',b:'Kler AI',s:'ประมวลผล & เข้าใจ'},
+  {type:'phone',b:'AI Persona on Kler',s:'แอป AI ส่วนตัวของคุณ'},
+  {type:'slot',b:'Caregivers & Teams',s:'ผู้ดูแล ครอบครัว หรือองค์กร'},
+];
+const platformFeats = [['pin','ติดตามแบบ Real-Time'],['bell','แจ้งเตือนอัจฉริยะ'],['chart','กิจกรรม & พัฒนาการ'],['chat','สื่อสารในครอบครัว']];
+
+const gears = [
+  {img:'assets/gear-cane.png',t:'Guide Kler',sub:'ไม้เท้าอัจฉริยะ'},
+  {img:'assets/gear-backpack.png',t:'Learn Kler',sub:'เป้การเรียนรู้'},
+  {img:'assets/gear-hat.png',t:'Explore Kler',sub:'หมวกท่องเที่ยว'},
+];
+
+const whys = [
+  {ic:'sparkle',t:'AI Persona ที่เข้าใจและจดจำคุณ',d:'ยิ่งใช้ ยิ่งรู้ใจ ปรับตัวให้เข้ากับคุณคนเดียว'},
+  {ic:'refresh',t:'ปรับเปลี่ยนตามวัยและความต้องการ',d:'เพื่อนคนเดียวที่เติบโตและเปลี่ยนไปพร้อมคุณ'},
+  {ic:'shield',t:'ช่วยให้ชีวิตง่ายขึ้น ปลอดภัยขึ้น',d:'ดูแล เตือน และช่วยเหลือในทุกสถานการณ์'},
+  {ic:'link',t:'เชื่อมต่อผู้ดูแลได้ตลอดเวลา',d:'ครอบครัว ผู้ดูแล หรือองค์กร อุ่นใจ รู้ว่าคุณปลอดภัยเสมอ'},
+];
+
+const pricing = [
+  {tag:'อุปกรณ์',ic:'glasses',name:'KLER Smart Glasses',price:'฿xxxx',period:'จ่ายครั้งเดียว',cta:'สั่งซื้อแว่น',featured:false,
+   feats:['แว่น AI พร้อมกล้องและเซ็นเซอร์','Guide Kler พื้นฐานในตัว','นำทางด้วยเสียง & SOS ฉุกเฉิน','แบตเตอรี่ใช้ได้ทั้งวัน']},
+  {tag:'ยอดนิยม',ic:'sparkle',name:'Kler+',price:'฿xxx',period:'/ เดือน',cta:'เริ่มใช้ Kler+',featured:true,
+   feats:['ปลดล็อก AI Persona ส่วนตัว','AI จดจำและเข้าใจคุณคนเดียว','ครบทุก Persona (Guide / Learn)','เชื่อมต่อ Kler Platform เต็มรูปแบบ','อัปเดตฟีเจอร์ใหม่ก่อนใคร']},
+  {tag:'ครอบครัว & องค์กร',ic:'family',name:'Kler Care',price:'฿xxx',period:'/ เดือน',cta:'เลือกแพ็ก Care',featured:false,
+   feats:['ทุกอย่างใน Kler+','รองรับหลายอุปกรณ์ / หลายคน','ผู้ดูแลหลายคน ครอบครัว หรือองค์กร','แดชบอร์ดสำหรับผู้ดูแล & รายงานเชิงลึก']},
+];
+
+/* ---------- RENDER ---------- */
+const $=s=>document.querySelector(s);
+$('#featGrid').innerHTML = features.map(f=>`
+  <div class="feat">
+    <div class="ficon" style="background:linear-gradient(140deg,${f.c},${f.c} 0%);background:${f.c}">${ICON[f.ic]}</div>
+    <h3>${f.t}</h3><p>${f.d}</p>
+  </div>`).join('');
+
+// persona tabs
+// persona selector = gear cards (01/02/03)
+
+let curPersona=0;
+function renderPersona(i){
+  const p = personas[i];
+  $('#pcard').classList.toggle('soon', !!p.soon);
+  $('#pring').style.background = `radial-gradient(circle at 40% 35%,rgba(255,255,255,.92),${p.soft} 55%,transparent 72%)`;
+  const img = $('#pimg');
+  img.style.opacity=0; img.style.transform='scale(.92)';
+  setTimeout(()=>{ img.src=p.img; img.alt=p.name; img.style.opacity=1; img.style.transform='scale(1)'; },180);
+  const badge=null;
+  $('#pnum').textContent = `KLER PERSONA ${p.num}`; $('#pnum').style.color=p.accent;
+  $('#ptitle').textContent = p.name;
+  $('#pdesc').textContent = p.sub;
+  const gear=$('#pgear'); gear.style.display=''; gear.innerHTML = `${ICON.sparkle}<span>ชุดอุปกรณ์: ${p.gear}</span>`;
+  gear.style.color=p.accent; gear.style.background=p.soft;
+  $('#pfeatures').innerHTML = p.feats.map(f=>`<li><span class="chk" style="background:${p.accent}">${ICON[f.ic]}</span><span class="pf-txt"><b>${f.t}</b><small>${f.d}</small></span></li>`).join('');
+  const psoon=$('#pphoneSoon'); if(psoon){ psoon.style.display = p.soon?'flex':'none'; psoon.querySelector('.psoon-ic').style.background=p.accent; }
+  curPersona=i;
+  highlightGear(i);
+}
+function highlightGear(i){
+  document.querySelectorAll('#gearGrid .gear').forEach((g,gi)=>{
+    g.classList.toggle('active', gi===i);
+    g.style.setProperty('--ga', personas[gi]?personas[gi].accent:'#7B61FF');
+  });
+}
+$('#gearGrid').addEventListener('click',e=>{const c=e.target.closest('.gear');if(!c)return;const cards=[...document.querySelectorAll('#gearGrid .gear')];const idx=cards.indexOf(c);if(idx>=0)renderPersona(idx);});
+renderPersona(0);
+
+// platform flow
+$('#flow').innerHTML = flow.map((n,i)=>{
+  let vis='';
+  if(n.type==='svg') vis=`<div class="fn-circle">${ICON[n.ic]}</div>`;
+  else if(n.type==='k') vis=`<div class="fn-circle" style="background:#fff;border-color:rgba(123,97,255,.25)"><img src="assets/mark.png" alt="Kler" style="width:48px;height:48px;object-fit:contain"></div>`;
+  else if(n.type==='phone') vis=`<div class="fn-circle" style="background:var(--grad);border:none"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M10.5 18h3"/></svg></div>`;
+  else vis=`<div class="fn-circle" style="background:rgba(80,224,200,.16);border-color:rgba(80,224,200,.4)">${ICON.family}</div>`;
+  const arrow = i<flow.length-1 ? `<div class="farrow">→</div>` : '';
+  return `<div class="fnode"><div class="fn-vis">${vis}</div><b>${n.b}</b><small>${n.s}</small></div>${arrow}`;
+}).join('');
+
+$('#platformFeats').innerHTML = platformFeats.map(f=>`<div class="psf"><div class="pic">${ICON[f[0]]}</div><span>${f[1]}</span></div>`).join('');
+
+$('#gearGrid').innerHTML = gears.map((g,i)=>`
+  <div class="gear" role="button" tabindex="0">
+    <div class="step">0${i+1}</div>
+    <div class="gear-img"><img src="${g.img}" alt="${g.t}"></div>
+    <h3>${g.t}${personas[i]&&personas[i].soon?`<span class="gear-soon">coming soon</span>`:''}</h3>
+    <div class="gear-sub">${g.sub}</div>
+    <div class="barcode"></div>
+  </div>`).join('');
+highlightGear(curPersona);
+
+$('#whyGrid').innerHTML = whys.map(w=>`
+  <div class="whyc"><div class="wn">${ICON[w.ic]}</div><div><h3>${w.t}</h3><p>${w.d}</p></div></div>`).join('');
+
+$('#priceGrid').innerHTML = pricing.map(p=>`
+  <div class="price${p.featured?' feat':''}">
+    <div class="price-tag">${p.tag}</div>
+    <div class="price-ic">${ICON[p.ic]}</div>
+    <h3>${p.name}</h3>
+    <div class="price-amt"><span class="amt">${p.price}</span><span class="per">${p.period}</span></div>
+    <ul class="price-feats">${p.feats.map(f=>`<li>${ICON.check}<span>${f}</span></li>`).join('')}</ul>
+    <a href="#" class="price-btn">${p.cta}</a>
+  </div>`).join('');
+
+// stars
+const sc=$('#stars');let sh='';
+for(let i=0;i<26;i++){const s=Math.random()*2.5+1;sh+=`<span class="star" style="width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${(Math.random()*4).toFixed(1)}s"></span>`;}
+sc.innerHTML=sh;
+
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// auto-cycle the persona phone screens
+(function(){
+  const screens=[...document.querySelectorAll('#pscreens .psc')];
+  if(screens.length<2) return;
+  let idx=0;
+  setInterval(()=>{
+    screens[idx].classList.remove('on');
+    idx=(idx+1)%screens.length;
+    screens[idx].classList.add('on');
+  },2800);
+})();
+
+// live background-key the hero dog clip (gray bg -> transparent)
+(function(){
+  const v=document.getElementById('dogVideo'), cv=document.getElementById('dogCanvas');
+  if(!v||!cv) return;
+  const KW=440, KH=470; cv.width=KW; cv.height=KH;
+  const ctx=cv.getContext('2d',{willReadFrequently:true});
+  function draw(){
+    if(v.readyState>=2 && v.videoWidth){
+      ctx.clearRect(0,0,KW,KH);
+      // crop to the dog (centered, lower portion of the 1280x720 frame)
+      ctx.drawImage(v, 360,80, 560,640, 0,0, KW,KH);
+      const id=ctx.getImageData(0,0,KW,KH), d=id.data;
+      for(let i=0;i<d.length;i+=4){
+        const r=d[i],g=d[i+1],b=d[i+2];
+        const mx=Math.max(r,g,b),mn=Math.min(r,g,b);
+        const sat=mx-mn, lum=(r+g+b)/3, warm=r-b;
+        // background = neutral (non-warm) gray, mid-to-light luminance
+        if(sat<26 && warm<9 && lum>116){
+          d[i+3] = lum<128 ? Math.round(((lum-116)/12)*255) : 0;
+        }
+      }
+      ctx.putImageData(id,0,0);
+    }
+    requestAnimationFrame(draw);
+  }
+  const start=()=>{ v.play().catch(()=>{}); requestAnimationFrame(draw); };
+  if(v.readyState>=2) start(); else v.addEventListener('loadeddata',start,{once:true});
+})();
+</script>
+</body>
+</html>
