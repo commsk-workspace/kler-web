@@ -1,0 +1,8 @@
+/* ==========================================================================
+   KLER — Webfonts
+   Display / UI : Sora (Google Fonts) — matches brand spec exactly.
+   Thai companion : Noto Sans Thai (Google Fonts) — SUBSTITUTE for the
+     looped Thai face in the source mockups; see readme "Fonts" note.
+   Loaded via Google Fonts CSS (served from fonts.gstatic.com).
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap');

@@ -1,0 +1,92 @@
+/* ==========================================================================
+   KLER — Color tokens
+   Brand: Galaxy Purple + Aurora Mint, lavender-tinted cool neutrals.
+   Base scales first, then semantic aliases.
+   ========================================================================== */
+:root {
+  /* ---- Galaxy Purple (primary) ---- */
+  --purple-50:  #F2EFFF;
+  --purple-100: #E7E1FF;
+  --purple-150: #EDE6FF; /* pale lavender surface */
+  --purple-200: #D6CBFF;
+  --purple-300: #B9A7FF; /* Lavender */
+  --purple-400: #9B7DFF;
+  --purple-500: #7B61FF; /* Galaxy Purple — brand primary */
+  --purple-600: #6A4DF0;
+  --purple-700: #573BD1;
+  --purple-800: #432C9E;
+  --purple-900: #2E1E6B;
+
+  /* ---- Aurora Mint (secondary / accent) ---- */
+  --mint-50:  #E6FBF8;
+  --mint-100: #C9F5EF;
+  --mint-200: #9CEDE3;
+  --mint-300: #63E0D8; /* Aurora Mint — brand accent */
+  --mint-400: #3CCEC4;
+  --mint-500: #1FB3A8;
+  --mint-600: #159084;
+  --mint-700: #0F6E66;
+
+  /* ---- Cool / lavender-tinted neutrals ---- */
+  --white:      #FFFFFF;
+  --neutral-25:  #FBFAFF;
+  --neutral-50:  #F6F4FC; /* Moon White surface */
+  --neutral-100: #EDEBF5;
+  --neutral-200: #E0DDEC;
+  --neutral-300: #C9C5D8;
+  --neutral-400: #A7A2BA;
+  --neutral-500: #837E96;
+  --neutral-600: #605B72;
+  --neutral-700: #45415A;
+  --neutral-800: #2B2840;
+  --neutral-900: #1F2146; /* Midnight */
+  --ink:         #16182E; /* deepest — logo wordmark */
+
+  /* ---- Semantic status ---- */
+  --success:     #22B07D;
+  --success-fg:  #157A57;
+  --success-bg:  #E1F7EE;
+  --online:      #35C878; /* connected / online dot */
+
+  --warning:     #F5A524;
+  --warning-fg:  #B26A00;
+  --warning-bg:  #FFF1D9;
+
+  --danger:      #EF4444; /* SOS / emergency */
+  --danger-fg:   #B42318;
+  --danger-bg:   #FEE4E2;
+
+  --info:        var(--purple-500);
+  --info-bg:     var(--purple-50);
+
+  /* ---- Brand gradients ---- */
+  --gradient-brand: linear-gradient(120deg, #7B61FF 0%, #8E6BFF 42%, #63E0D8 100%); /* @kind color */
+  --gradient-brand-soft: linear-gradient(120deg, #9B7DFF 0%, #63E0D8 100%); /* @kind color */
+  --gradient-purple: linear-gradient(135deg, #7B61FF 0%, #9B7DFF 100%); /* @kind color */
+  --gradient-aurora: linear-gradient(135deg, #EDE6FF 0%, #E6FBF8 55%, #F6F4FC 100%); /* @kind color */
+  --gradient-orb: radial-gradient(circle at 32% 28%, #B9A7FF 0%, #7B61FF 45%, #63E0D8 100%); /* @kind color */
+
+  /* ==== Semantic aliases ==== */
+  --brand:            var(--purple-500);
+  --brand-strong:     var(--purple-600);
+  --brand-soft:       var(--purple-150);
+  --accent:           var(--mint-300);
+
+  --text-strong:      var(--neutral-900);
+  --text-body:        var(--neutral-700);
+  --text-muted:       var(--neutral-500);
+  --text-onbrand:     var(--white);
+  --text-brand:       var(--purple-600);
+
+  --surface-page:     var(--neutral-50);
+  --surface-card:     var(--white);
+  --surface-sunken:   var(--neutral-100);
+  --surface-brand:    var(--purple-500);
+  --surface-brand-soft:var(--purple-150);
+
+  --border-subtle:    var(--neutral-200);
+  --border-default:   var(--neutral-300);
+  --border-brand:     var(--purple-300);
+
+  --focus-ring:       color-mix(in srgb, var(--purple-500) 45%, transparent);
+}
