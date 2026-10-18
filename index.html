@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KLER — AI Smart Glasses for Elderly Care</title>
+<link rel="icon" type="image/png" href="./assets/kler-mark.png">
+<link rel="apple-touch-icon" href="./assets/kler-mark.png">
 <meta name="description" content="KLER แว่นตาอัจฉริยะ AI สำหรับผู้สูงอายุ — ผู้ช่วย AI, แจ้งเตือนยา, ติดตามสุขภาพ, ฉุกเฉิน SOS พร้อมดูแลครอบครัว">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://heykler.com/">
@@ -53,7 +55,7 @@
 <div style="position:fixed; right:clamp(24px, 4vw, 56px); bottom:clamp(22px, 4.5vh, 44px); z-index:80; display:flex; align-items:baseline; gap:10px; pointer-events:none;">
   <span style="font-family:'Noto Sans Thai','Sora',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.3em; color:rgba(185,167,255,0.55);">หน้า</span>
   <span ref="{{ refPageNum }}" style="font-family:'Sora',sans-serif; font-size:clamp(20px, 2vw, 26px); font-weight:700; color:#F6F4FC; letter-spacing:0.08em;">01</span>
-  <span style="font-family:'Sora',sans-serif; font-size:12px; font-weight:600; color:rgba(185,167,255,0.55); letter-spacing:0.12em;">/ 15</span>
+  <span style="font-family:'Sora',sans-serif; font-size:12px; font-weight:600; color:rgba(185,167,255,0.55); letter-spacing:0.12em;">/ 14</span>
 </div>
 
 <div ref="{{ refHeroLogo }}" style="position:fixed; left:clamp(20px, 4vw, 56px); bottom:clamp(18px, 4.5vh, 44px); z-index:60; display:flex; flex-direction:column; align-items:flex-start; gap:clamp(4px, 0.8vh, 11px); pointer-events:none; will-change:opacity;">
@@ -123,7 +125,7 @@
   <img ref="{{ refFloatPhone }}" src="assets/app-home.png" alt="หน้าจอหลักของแอป KLER" style="position:relative; z-index:2; height:min(88vh, 940px); width:auto; max-width:92vw; object-fit:contain; filter:drop-shadow(0 44px 130px rgba(123,97,255,0.5)); will-change:transform;">
 </section>
 
-<section data-screen-label="With Kler" data-page="3" ref="{{ refScene3 }}" style="position:relative; height:560vh; background:transparent; scroll-snap-align:start;">
+<section data-screen-label="With Kler" data-page="3" ref="{{ refScene3 }}" style="position:relative; height:468vh; background:transparent; scroll-snap-align:start;">
   <div style="position:sticky; top:0; height:100vh; overflow:hidden;">
     <div ref="{{ refS3Orb }}" style="position:absolute; left:50%; top:46%; width:min(74vw, 820px); aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle at 50% 42%, rgba(123,97,255,0.3), rgba(99,224,216,0.09) 52%, transparent 72%); filter:blur(74px); pointer-events:none;"></div>
 
@@ -197,7 +199,7 @@
 
     </div>
 
-    <div ref="{{ refS3Final }}" style="position:absolute; inset:0; opacity:0; pointer-events:none; will-change:opacity;">
+    <div ref="{{ refS3Final }}" style="display:none; position:absolute; inset:0; opacity:0; pointer-events:none; will-change:opacity;">
       <div ref="{{ refS3SaveLayer }}" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(11px, 1.8vh, 22px); text-align:center; padding:0 24px; will-change:transform, opacity;">
         <div style="display:flex; align-items:center; gap:13px; padding:10px 20px; border-radius:99px; background:rgba(28,18,58,0.6); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(185,167,255,0.28); box-shadow:0 16px 50px rgba(123,97,255,0.3);">
           <span style="font-family:'Sora',sans-serif; font-weight:800; font-size:14px; letter-spacing:0.16em; color:#F6F4FC;">KLER</span>
@@ -269,7 +271,7 @@
  </div>
 </section>
 
-<section data-screen-label="Pricing" data-page="5" ref="{{ refScene5 }}" style="position:relative; height:100vh; overflow:hidden; background:transparent; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(22px, 4vh, 48px); padding:0 clamp(16px, 4vw, 48px); box-sizing:border-box; scroll-snap-align:start;">
+<section data-screen-label="Pricing" data-page="5" ref="{{ refScene5 }}" style="position:relative; height:100vh; overflow:hidden; background:transparent; display:none; flex-direction:column; align-items:center; justify-content:center; gap:clamp(22px, 4vh, 48px); padding:0 clamp(16px, 4vw, 48px); box-sizing:border-box; scroll-snap-align:start;">
   <div style="text-align:center;">
     <div style="font-family:'Sora',sans-serif; font-size:clamp(10px, 0.95vw, 13px); font-weight:700; letter-spacing:0.42em; color:#63E0D8;">PRICING · ราคา KLER</div>
     <h2 style="margin:12px 0 0; font-family:'Noto Sans Thai','Sora',sans-serif; font-weight:800; font-size:clamp(28px, 4.2vw, 58px); line-height:1.05; color:#F6F4FC; letter-spacing:-0.01em;">เริ่มต้นเป็นเจ้าของ <span style="background:linear-gradient(115deg,#B9A7FF,#7B61FF 46%,#63E0D8); -webkit-background-clip:text; background-clip:text; color:transparent;">Kler</span></h2>
@@ -963,9 +965,12 @@ class Component extends DCLogic {
     if (E.pageNum) {
       const pages = document.querySelectorAll('[data-page]');
       let cur = this._pageCur || '01';
+      let shown = 0;
       for (let k = 0; k < pages.length; k++) {
         const r = pages[k].getBoundingClientRect();
-        if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) { cur = ('0' + pages[k].getAttribute('data-page')).slice(-2); break; }
+        if (r.height === 0) continue;
+        shown++;
+        if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) { cur = ('0' + shown).slice(-2); break; }
       }
       if (cur !== this._pageCur) { this._pageCur = cur; E.pageNum.textContent = cur; }
     }
@@ -981,12 +986,12 @@ class Component extends DCLogic {
     if (E.scene3) {
       const rect = E.scene3.getBoundingClientRect();
       const total = Math.max(rect.height - vh, 1);
-      const p = clamp01(-rect.top / total);
+      // Savings summary is hidden: the scene now ends at 0.8 of the original timeline
+      const p = clamp01(-rect.top / total) * 0.8;
       const seg = (a, b) => clamp01((p - a) / (b - a));
       if (E.s3head) {
         const dock = ease(seg(0, 0.16));
         E.s3head.style.transform = 'translateY(' + ((1 - dock) * 26).toFixed(2) + 'vh) scale(' + (1.26 - 0.26 * dock).toFixed(3) + ')';
-        E.s3head.style.opacity = (1 - ease(seg(0.6, 0.7))).toFixed(3);
       }
       if (E.s3orb) {
         const gp = 0.4 + 0.6 * ease(seg(0.78, 0.95));
@@ -994,7 +999,7 @@ class Component extends DCLogic {
       }
       if (E.s3cards) {
         const cardsIn = ease(seg(0.16, 0.26));
-        const fade = ease(seg(0.72, 0.84));
+        const fade = 0;
         E.s3cards.style.opacity = (cardsIn * (1 - fade * 0.88)).toFixed(3);
         E.s3cards.style.filter = fade > 0.001 ? 'blur(' + (fade * 6).toFixed(1) + 'px)' : 'none';
         E.s3cards.style.transform = 'translateX(-50%) translateY(' + (-fade * 26).toFixed(1) + 'px) scale(' + (1 - fade * 0.06).toFixed(3) + ')';
