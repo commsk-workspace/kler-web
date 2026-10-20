@@ -1,0 +1,27 @@
+name: Deploy heykler.com
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, kler-web]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync to /var/www/kler-web
+        run: |
+          test -f index.html
+          rsync -a --delete --exclude='.git' --exclude='.github' ./ /var/www/kler-web/
+          echo "Deployed $GITHUB_SHA at $(date -u +%FT%TZ)"
+
+      - name: Verify
+        run: |
+          cmp index.html /var/www/kler-web/index.html
+          curl -fsS -o /dev/null --resolve heykler.com:443:127.0.0.1 https://heykler.com/ -k || curl -fsS -o /dev/null http://127.0.0.1:4443 -k
